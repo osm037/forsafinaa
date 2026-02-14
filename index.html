@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For Safeena — Valentine’s Proposal</title>
+    <!-- Fonts: Elegant cursive for English; Nastaliq for Urdu -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      /* 
+        Premium Valentine’s Day proposal for Safeena
+        - Deep red + black luxurious gradient
+        - Gold glowing accents
+        - Sparkles, floating hearts, rose petals
+        - Glassmorphism card
+        - Cinematic transitions and animations
+        - Fully responsive
+      */
+
+      :root {
+        --black: #0a0a0a;
+        --red-deep: #7a001f;
+        --red: #b0002a;
+        --gold: #f5d06c;
+        --gold-soft: rgba(245, 208, 108, 0.35);
+        --white: #ffffff;
+        --glass-bg: rgba(255, 255, 255, 0.08);
+        --glass-border: rgba(255, 255, 255, 0.25);
+        --shadow: rgba(0, 0, 0, 0.45);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html, body {
+        height: 100%;
+      }
+
+      body {
+        margin: 0;
+        color: var(--white);
+        background:
+          radial-gradient(1200px 600px at 10% 10%, #18000a 0%, transparent 65%),
+          radial-gradient(900px 500px at 90% 90%, #25000f 0%, transparent 60%),
+          radial-gradient(1200px 800px at 50% 50%, #14000a 0%, transparent 70%),
+          linear-gradient(135deg, #000000 0%, #0b0004 35%, #160008 65%, #000000 100%);
+        background-attachment: fixed;
+        overflow: hidden;
+        font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, 'Noto Nastaliq Urdu', sans-serif;
+      }
+
+      /* Global gold glow utility */
+      .gold-glow {
+        text-shadow:
+          0 0 8px var(--gold-soft),
+          0 0 16px var(--gold-soft),
+          0 0 24px rgba(245, 208, 108, 0.25);
+        color: var(--gold);
+      }
+
+      /* Fullscreen stage container (three scenes) */
+      .stage {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        pointer-events: auto;
+      }
+
+      /* Shared section styles */
+      section.scene {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        opacity: 0;
+        transform: scale(1.03);
+        transition: opacity 900ms ease, transform 900ms ease;
+        pointer-events: none;
+        padding: clamp(16px, 4vw, 48px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      section.scene.active {
+        opacity: 1;
+        transform: scale(1);
+        pointer-events: auto;
+      }
+
+      /* Background sparkles canvas sits underneath everything */
+      #sparkleCanvas {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      /* Decorative floating hearts (ambient) */
+      .floating-hearts {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 2;
+      }
+      .floating-hearts .heart {
+        position: absolute;
+        font-size: clamp(18px, 3vw, 32px);
+        color: #ff517a;
+        opacity: 0.35;
+        animation: floatHeart var(--dur, 12s) linear infinite;
+        filter: drop-shadow(0 0 6px rgba(255, 80, 120, 0.4));
+      }
+      @keyframes floatHeart {
+        0%   { transform: translate(var(--x, 0), 110vh) rotate(0deg) scale(1); opacity: 0; }
+        10%  { opacity: 0.35; }
+        50%  { transform: translate(calc(var(--x, 0) + 30px), 55vh) rotate(20deg) scale(1.05); }
+        100% { transform: translate(calc(var(--x, 0) - 20px), -15vh) rotate(-20deg) scale(0.95); opacity: 0; }
+      }
+
+      /* Rose petals (used more prominently in final scene) */
+      .rose-petals {
+        position: fixed;
+        inset: -10vh 0 0 0;
+        pointer-events: none;
+        z-index: 3;
+        overflow: hidden;
+      }
+      .rose-petals .petal {
+        position: absolute;
+        width: clamp(10px, 2.5vw, 18px);
+        height: clamp(16px, 3.7vw, 26px);
+        background: radial-gradient(60% 60% at 50% 50%, #ff3666 10%, #c3003b 70%, #7a001f 100%);
+        border-radius: 60% 60% 30% 60%;
+        opacity: 0;
+        transform: translateY(-10vh) rotate(0deg);
+        animation: fallPetal var(--pdur, 12s) ease-in infinite;
+        filter: drop-shadow(0 0 4px rgba(255, 54, 102, 0.5));
+      }
+      @keyframes fallPetal {
+        0%   { transform: translate(var(--px, 0), -15vh) rotate(0deg); opacity: 0; }
+        10%  { opacity: 0.8; }
+        50%  { transform: translate(calc(var(--px, 0) + 40px), 50vh) rotate(120deg); }
+        100% { transform: translate(calc(var(--px, 0) - 20px), 110vh) rotate(260deg); opacity: 0; }
+      }
+
+      /* Glassmorphism romantic card */
+      .card {
+        position: relative;
+        max-width: 960px;
+        width: min(92vw, 960px);
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        padding: clamp(20px, 4vw, 48px);
+        box-shadow:
+          0 40px 80px var(--shadow),
+          inset 0 0 0 1px rgba(255,255,255,0.06);
+      }
+      .card::before {
+        content: '';
+        position: absolute;
+        inset: -2px;
+        border-radius: inherit;
+        background: linear-gradient(135deg, rgba(245, 208, 108, 0.12), rgba(255,255,255,0.05));
+        filter: blur(6px);
+        z-index: -1;
+      }
+      .card-header {
+        text-align: center;
+        margin-bottom: clamp(16px, 3vw, 28px);
+      }
+      .title-en {
+        font-family: 'Great Vibes', cursive;
+        font-size: clamp(36px, 6vw, 64px);
+        letter-spacing: 0.5px;
+      }
+      .text-en {
+        font-size: clamp(16px, 2.4vw, 20px);
+        line-height: 1.75;
+      }
+      .urdu {
+        margin-top: 10px;
+        font-family: 'Noto Nastaliq Urdu', serif;
+        font-size: clamp(18px, 3.2vw, 26px);
+        line-height: 2.1;
+        text-align: center;
+      }
+
+      /* Premium glowing button */
+      .actions {
+        display: grid;
+        place-items: center;
+        margin-top: clamp(18px, 3vw, 24px);
+        gap: 16px;
+      }
+      .btn {
+        --btn-bg: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.02));
+        position: relative;
+        display: inline-grid;
+        place-items: center;
+        padding: clamp(12px, 2.8vw, 16px) clamp(18px, 4vw, 28px);
+        border-radius: 999px;
+        color: var(--gold);
+        background: var(--btn-bg);
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(245, 208, 108, 0.35);
+        text-decoration: none;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        box-shadow:
+          0 0 20px rgba(245, 208, 108, 0.15),
+          inset 0 0 12px rgba(245, 208, 108, 0.08);
+        transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+        cursor: pointer;
+      }
+      .btn::before {
+        content: '';
+        position: absolute;
+        inset: -3px;
+        border-radius: inherit;
+        background: radial-gradient(40% 60% at 50% 50%, rgba(245, 208, 108, 0.25), transparent 60%);
+        filter: blur(10px);
+        z-index: -1;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow:
+          0 0 28px rgba(245, 208, 108, 0.28),
+          inset 0 0 16px rgba(245, 208, 108, 0.12);
+      }
+      .btn:active {
+        transform: translateY(0px) scale(0.99);
+      }
+      /* Open My Heart button: dynamic mouse-hover glow */
+      #btnOpenHeart {
+        overflow: hidden;
+      }
+      #btnOpenHeart::after {
+        content: '';
+        position: absolute;
+        left: 0; top: 0; width: 100%; height: 100%;
+        pointer-events: none;
+        opacity: 0;
+        background:
+          radial-gradient(140px 140px at var(--mx, 50%) var(--my, 50%),
+            rgba(245, 208, 108, 0.28),
+            rgba(245, 208, 108, 0.12) 55%,
+            transparent 70%);
+        transition: opacity 180ms ease;
+      }
+      #btnOpenHeart:hover::after {
+        opacity: 1;
+      }
+      @keyframes hoverPulse {
+        0%   { transform: translateY(-1px) scale(1); }
+        50%  { transform: translateY(-2px) scale(1.03); }
+        100% { transform: translateY(-1px) scale(1); }
+      }
+      #btnOpenHeart:hover {
+        animation: hoverPulse 1000ms ease-in-out infinite alternate;
+      }
+
+      /* Scene 1: Dramatic Entry specifics */
+      .scene-1 {
+        z-index: 4;
+        background: radial-gradient(500px 500px at 50% 60%, rgba(255,255,255,0.02), transparent 70%);
+      }
+      .scene-1 .intro {
+        text-align: center;
+        display: grid;
+        gap: clamp(8px, 2vw, 14px);
+      }
+      .scene-1 .intro .prelude {
+        font-size: clamp(18px, 3vw, 24px);
+        opacity: 0;
+        transform: translateY(12px);
+        animation: fadeUp 1200ms ease forwards;
+      }
+      .scene-1 .intro .safeena {
+        font-family: 'Great Vibes', cursive;
+        font-size: clamp(52px, 8vw, 96px);
+        letter-spacing: 1px;
+        opacity: 0;
+        transform: translateY(16px) scale(0.98);
+        animation: fadeUpScale 1600ms ease forwards 2s;
+      }
+      .scene-1 .intro .urdu-line {
+        font-family: 'Noto Nastaliq Urdu', serif;
+        font-size: clamp(20px, 3.4vw, 30px);
+        opacity: 0;
+        transform: translateY(12px);
+        animation: fadeUp 1400ms ease forwards 3.3s;
+      }
+      .scene-1 .actions {
+        opacity: 0;
+        animation: fadeIn 1000ms ease forwards 4.2s;
+      }
+
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+      }
+      @keyframes fadeUpScale {
+        from { opacity: 0; transform: translateY(16px) scale(0.98); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      /* Envelope overlay (briefly shown on click) */
+      .envelope-overlay {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        z-index: 12;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 600ms ease;
+      }
+      .envelope-overlay.show {
+        opacity: 1;
+      }
+      .envelope {
+        width: min(70vw, 520px);
+        aspect-ratio: 4 / 3;
+        position: relative;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+        border: 1px solid rgba(245, 208, 108, 0.45);
+        box-shadow:
+          0 40px 80px var(--shadow),
+          inset 0 0 16px rgba(245, 208, 108, 0.15);
+        overflow: hidden;
+      }
+      .envelope .flap {
+        position: absolute;
+        inset: 0;
+        transform-origin: top;
+        background:
+          conic-gradient(from 180deg at 50% 0%, rgba(245, 208, 108, 0.12), rgba(255,255,255,0.05));
+        clip-path: polygon(0 0, 100% 0, 50% 52%);
+        animation: openFlap 1200ms ease forwards;
+      }
+      @keyframes openFlap {
+        0%   { transform: rotateX(0deg); }
+        50%  { transform: rotateX(60deg); }
+        100% { transform: rotateX(92deg); }
+      }
+      .envelope .card-inside {
+        position: absolute;
+        inset: 12% 8%;
+        border-radius: 10px;
+        background: rgba(245, 208, 108, 0.08);
+        display: grid;
+        place-items: center;
+        color: var(--gold);
+        font-family: 'Great Vibes', cursive;
+        font-size: clamp(24px, 4vw, 36px);
+        opacity: 0;
+        animation: showCardInside 1400ms ease forwards 600ms;
+      }
+      @keyframes showCardInside {
+        from { opacity: 0; transform: translateY(12px) scale(0.98); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+      }
+
+      /* Heart explosion (particles emitted on first button click) */
+      .explosion {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 11;
+      }
+      .explosion .particle {
+        position: absolute;
+        font-size: clamp(18px, 3.2vw, 24px);
+        color: #ff7aa0;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+        animation: blast 1100ms ease-out forwards;
+        filter: drop-shadow(0 0 6px rgba(255, 122, 160, 0.6));
+      }
+      @keyframes blast {
+        0%   { opacity: 0; transform: translate(var(--x), var(--y)) scale(0.8); }
+        20%  { opacity: 1; }
+        100% { opacity: 0; transform: translate(calc(var(--x) + var(--dx)), calc(var(--y) + var(--dy))) scale(1.4); }
+      }
+
+      /* Scene 2: Romantic Letter */
+      .scene-2 .card .title-en {
+        margin-bottom: 6px;
+      }
+      .scene-2 .message {
+        margin-top: 6px;
+      }
+      .scene-2 .shayari {
+        margin-top: clamp(16px, 3vw, 24px);
+      }
+      .soft-glow {
+        text-shadow: 0 0 8px rgba(255,255,255,0.12), 0 0 18px rgba(255,255,255,0.08);
+      }
+
+      /* Scene 3: Final Proposal */
+      .scene-3 .proposal {
+        text-align: center;
+        display: grid;
+        gap: clamp(10px, 2.4vw, 16px);
+      }
+      .proposal .main {
+        font-family: 'Great Vibes', cursive;
+        font-size: clamp(48px, 8vw, 96px);
+      }
+      .proposal .urdu {
+        margin-top: 8px;
+      }
+      .proposal .final-lines {
+        margin-top: clamp(18px, 3vw, 24px);
+        opacity: 0;
+        transition: opacity 1200ms ease;
+      }
+      .proposal .final-lines.show {
+        opacity: 1;
+      }
+
+      /* Dim overlay for final scene */
+      .dim {
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(1000px 800px at 50% 50%, rgba(0,0,0,0.35), rgba(0,0,0,0.75));
+        z-index: 5;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 1200ms ease;
+      }
+      .dim.show {
+        opacity: 1;
+      }
+
+      /* Fireworks hearts during final Yes click */
+      .fireworks {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 10;
+      }
+      .fireworks .rocket, .fireworks .spark {
+        position: absolute;
+        color: #ff4f88;
+        text-shadow: 0 0 10px rgba(255, 79, 136, 0.7);
+      }
+      .fireworks .rocket {
+        font-size: clamp(20px, 3.2vw, 28px);
+        animation: shoot 1100ms ease-out forwards;
+      }
+      @keyframes shoot {
+        0%   { transform: translate(var(--sx), var(--sy)) scale(0.9); opacity: 0; }
+        20%  { opacity: 1; }
+        100% { transform: translate(var(--ex), var(--ey)) scale(1.3); opacity: 0.2; }
+      }
+      .fireworks .spark {
+        font-size: clamp(12px, 2.2vw, 18px);
+        opacity: 0;
+        animation: burst 1000ms ease-out forwards;
+      }
+      @keyframes burst {
+        0%   { opacity: 0; transform: translate(var(--bx), var(--by)) scale(0.7) rotate(0deg); }
+        20%  { opacity: 1; }
+        100% { opacity: 0; transform: translate(calc(var(--bx) + var(--dx)), calc(var(--by) + var(--dy))) scale(1.25) rotate(180deg); }
+      }
+
+      /* Responsive tweaks */
+      @media (max-width: 600px) {
+        .card { border-radius: 18px; }
+        .title-en { font-size: clamp(32px, 9vw, 56px); }
+      }
+      @media (max-width: 480px) {
+        .stage { padding: 12px; }
+        .scene { 
+          padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 16px));
+          place-items: start center;
+        }
+        .scene-1 .intro { gap: 8px; }
+        .scene-1 .intro .safeena { font-size: clamp(44px, 14vw, 72px); }
+        .scene-1 .intro .prelude { font-size: clamp(16px, 5vw, 22px); }
+        .scene-1 .intro .urdu-line { font-size: clamp(18px, 5.5vw, 24px); }
+        .card { width: 95vw; padding: 18px; border-radius: 16px; backdrop-filter: blur(8px); margin: 8px 0; }
+        .text-en { font-size: 15px; line-height: 1.7; }
+        .urdu { font-size: clamp(16px, 5.5vw, 22px); line-height: 2; }
+        .actions { margin-top: 14px; }
+        .btn { padding: 12px 18px; font-size: 14px; }
+        .proposal .main { font-size: clamp(40px, 13vw, 64px); }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sparkle background canvas -->
+    <canvas id="sparkleCanvas" aria-hidden="true"></canvas>
+
+    <!-- Ambient floating hearts -->
+    <div class="floating-hearts" aria-hidden="true" id="ambientHearts"></div>
+
+    <!-- Rose petals container -->
+    <div class="rose-petals" aria-hidden="true" id="petals"></div>
+
+    <!-- Explosion container for heart particles -->
+    <div class="explosion" aria-hidden="true" id="explosion"></div>
+
+    <!-- Envelope overlay (brief animation on first button) -->
+    <div class="envelope-overlay" id="envelopeOverlay" aria-hidden="true">
+      <div class="envelope">
+        <div class="flap"></div>
+        <div class="card-inside">My Heart, Open For You 💌</div>
+      </div>
+    </div>
+
+    <!-- Fireworks container for final celebration -->
+    <div class="fireworks" aria-hidden="true" id="fireworks"></div>
+
+    <!-- Dim overlay used in final scene -->
+    <div class="dim" id="dim"></div>
+
+    <!-- Stage with three scenes -->
+    <main class="stage" role="main">
+      <!-- Scene 1: Dramatic Entry -->
+      <section class="scene scene-1 active" id="scene1" aria-label="Dramatic Entry">
+        <div class="intro">
+          <div class="prelude soft-glow">For The Queen of My Heart…</div>
+          <div class="safeena gold-glow">Safeena ❤️</div>
+          <div class="urdu gold-glow">تم میری قسمت کا سب سے خوبصورت حصہ ہو 💖</div>
+          <div class="actions">
+            <button class="btn" id="btnOpenHeart">Open My Heart 💌</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 2: Romantic Letter -->
+      <section class="scene scene-2" id="scene2" aria-label="Romantic Letter">
+        <div class="card">
+          <div class="card-header">
+            <div class="title-en gold-glow">Happy Valentine’s Day, Safeena ❤️</div>
+          </div>
+          <div class="message text-en">
+            <p class="soft-glow">
+              Safeena,<br />
+              Since the day you entered my life,<br />
+              everything feels brighter, warmer, and more meaningful.<br />
+              Your smile is my peace.<br />
+              Your voice is my comfort.<br />
+              Your love is my greatest blessing.<br />
+              I don’t just love you…<br />
+              I choose you. Every single day. 💖
+            </p>
+          </div>
+          <div class="shayari">
+            <div class="urdu gold-glow" id="urdu1">
+              سیفینہ،<br />
+              تیرا نام ہی دل کو سکون دے جاتا ہے،<br />
+              تیری باتوں کا ہر لفظ مجھے اپنا بنا جاتا ہے،<br />
+              میں نے کبھی جنت نہیں دیکھی…<br />
+              مگر جب تم مسکراتی ہو،<br />
+              تو لگتا ہے خدا میرے سامنے کھڑا ہے۔ 💕
+            </div>
+            <div class="urdu gold-glow" id="urdu2" style="opacity:0;">
+              میری ہر خوشی تم سے شروع ہوتی ہے،<br />
+              اور میری ہر دعا تم پر ختم ہوتی ہے،<br />
+              اگر محبت عبادت ہے،<br />
+              تو سیفینہ… تم میری سب سے خوبصورت عبادت ہو۔ ❤️
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn" id="btnSurprise">One Last Surprise 💍</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scene 3: Final Proposal -->
+      <section class="scene scene-3" id="scene3" aria-label="Final Proposal">
+        <div class="proposal">
+          <div class="main gold-glow">Safeena…<br />Will You Be Mine Forever? 💍</div>
+          <div class="urdu gold-glow">کیا تم ہمیشہ میری رہو گی؟ 💖</div>
+          <div class="actions">
+            <button class="btn" id="btnYes">Yes ❤️</button>
+            <button class="btn" id="btnForeverYes">Forever Yes 💖</button>
+          </div>
+          <div class="final-lines text-en" id="finalLines">
+            <div class="gold-glow" style="text-align:center;">
+              You are my forever, my always, my destiny. 🌹
+            </div>
+            <div class="urdu gold-glow" style="text-align:center;">
+              میری دنیا صرف تم سے ہے، سیفینہ۔ 💞
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      /* ------------------------------
+         Sparkle particles (Canvas)
+         ------------------------------ */
+      const canvas = document.getElementById('sparkleCanvas');
+      const ctx = canvas.getContext('2d');
+      let W = canvas.width = window.innerWidth;
+      let H = canvas.height = window.innerHeight;
+
+      const stars = [];
+      const isMobile = window.matchMedia('(max-width: 600px)').matches || (navigator.maxTouchPoints || 0) > 0;
+      const STAR_COUNT = isMobile ? 90 : 160;
+      function spawnStar() {
+        return {
+          x: Math.random() * W,
+          y: Math.random() * H,
+          r: Math.random() * 1.6 + 0.4,
+          twinkle: Math.random() * Math.PI * 2,
+          speedX: (Math.random() - 0.5) * 0.05,
+          speedY: (Math.random() - 0.5) * 0.05,
+        };
+      }
+      for (let i = 0; i < STAR_COUNT; i++) stars.push(spawnStar());
+
+      function drawStars() {
+        ctx.clearRect(0, 0, W, H);
+        for (const s of stars) {
+          s.twinkle += 0.02;
+          s.x += s.speedX;
+          s.y += s.speedY;
+          if (s.x < 0) s.x = W; if (s.x > W) s.x = 0;
+          if (s.y < 0) s.y = H; if (s.y > H) s.y = 0;
+          const alpha = 0.5 + Math.sin(s.twinkle) * 0.35;
+          ctx.beginPath();
+          const grad = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 3);
+          grad.addColorStop(0, `rgba(245, 208, 108, ${alpha})`);
+          grad.addColorStop(1, 'rgba(245, 208, 108, 0)');
+          ctx.fillStyle = grad;
+          ctx.arc(s.x, s.y, s.r * 3, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        requestAnimationFrame(drawStars);
+      }
+      drawStars();
+      window.addEventListener('resize', () => {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      });
+
+      /* ------------------------------
+         Ambient floating hearts
+         ------------------------------ */
+      const ambientHearts = document.getElementById('ambientHearts');
+      function spawnAmbientHearts() {
+        const count = isMobile ? 10 : 16;
+        for (let i = 0; i < count; i++) {
+          const span = document.createElement('span');
+          span.className = 'heart';
+          span.textContent = '❤';
+          const left = Math.random() * 100;
+          const dur = 10 + Math.random() * 12;
+          const xJitter = (Math.random() * 200 - 100) + 'px';
+          span.style.left = left + 'vw';
+          span.style.setProperty('--dur', dur + 's');
+          span.style.setProperty('--x', xJitter);
+          ambientHearts.appendChild(span);
+        }
+      }
+      spawnAmbientHearts();
+
+      /* ------------------------------
+         Rose petals (initially subtle)
+         ------------------------------ */
+      const petalsContainer = document.getElementById('petals');
+      function spawnPetals(n = 18, strong = false) {
+        for (let i = 0; i < n; i++) {
+          const p = document.createElement('div');
+          p.className = 'petal';
+          const left = Math.random() * 100;
+          const delay = Math.random() * 8;
+          const dur = 10 + Math.random() * 10;
+          const drift = (Math.random() * 160 - 80) + 'px';
+          p.style.left = left + 'vw';
+          p.style.animationDelay = delay + 's';
+          p.style.setProperty('--pdur', dur + 's');
+          p.style.setProperty('--px', drift);
+          p.style.opacity = strong ? 0.9 : 0.45;
+          petalsContainer.appendChild(p);
+        }
+      }
+      // Subtle petals from the start
+      spawnPetals(isMobile ? 6 : 10, false);
+
+      /* ------------------------------
+         Scenes and transitions
+         ------------------------------ */
+      const scene1 = document.getElementById('scene1');
+      const scene2 = document.getElementById('scene2');
+      const scene3 = document.getElementById('scene3');
+      function showScene(scene) {
+        [scene1, scene2, scene3].forEach(s => s.classList.remove('active'));
+        scene.classList.add('active');
+      }
+
+      /* ------------------------------
+         Heart explosion particles (on first click)
+         ------------------------------ */
+      const explosion = document.getElementById('explosion');
+      function heartExplosion(x, y, n = 24) {
+        for (let i = 0; i < n; i++) {
+          const part = document.createElement('span');
+          part.className = 'particle';
+          part.textContent = '❤';
+          const angle = Math.random() * Math.PI * 2;
+          const dist = 60 + Math.random() * 100;
+          const dx = Math.cos(angle) * dist + 'px';
+          const dy = Math.sin(angle) * dist + 'px';
+          part.style.left = x + 'px';
+          part.style.top = y + 'px';
+          part.style.setProperty('--x', '-50%');
+          part.style.setProperty('--y', '-50%');
+          part.style.setProperty('--dx', dx);
+          part.style.setProperty('--dy', dy);
+          explosion.appendChild(part);
+          setTimeout(() => part.remove(), 1200);
+        }
+      }
+
+      /* ------------------------------
+         Envelope overlay (brief)
+         ------------------------------ */
+      const envelopeOverlay = document.getElementById('envelopeOverlay');
+      function showEnvelope() {
+        envelopeOverlay.classList.add('show');
+        setTimeout(() => envelopeOverlay.classList.remove('show'), 1800);
+      }
+
+      /* ------------------------------
+         Background romantic music (WebAudio)
+         Starts after user interaction
+         ------------------------------ */
+      let audioCtx;
+      let padOscillators = [];
+      let padGains = [];
+      let heartbeatOsc;
+      let heartbeatGain;
+      function startMusic() {
+        if (audioCtx) return;
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        // Gentle pad: triad oscillators with slow attack/release
+        const baseFreqs = [220, 277, 330]; // A minor feel (A, C#, E) — slightly dreamy
+        baseFreqs.forEach((f, i) => {
+          const osc = audioCtx.createOscillator();
+          osc.type = i % 2 ? 'sine' : 'triangle';
+          osc.frequency.value = f;
+          const g = audioCtx.createGain();
+          g.gain.value = 0.0001;
+          osc.connect(g).connect(audioCtx.destination);
+          osc.start();
+          // Fade in
+          g.gain.exponentialRampToValueAtTime(0.08 + i * 0.02, audioCtx.currentTime + 0.8);
+          padOscillators.push(osc);
+          padGains.push(g);
+        });
+
+        // Soft arpeggio: slightly change frequencies over time
+        let step = 0;
+        setInterval(() => {
+          if (!audioCtx) return;
+          step++;
+          padOscillators.forEach((osc, idx) => {
+            const drift = (Math.sin(step / (6 + idx * 2)) * 4);
+            osc.frequency.setTargetAtTime(baseFreqs[idx] + drift, audioCtx.currentTime, 0.4);
+          });
+        }, 1200);
+      }
+      function startHeartbeat() {
+        if (!audioCtx) return;
+        heartbeatOsc = audioCtx.createOscillator();
+        heartbeatGain = audioCtx.createGain();
+        heartbeatOsc.type = 'sine';
+        heartbeatOsc.frequency.value = 80; // low pulse
+        heartbeatGain.gain.value = 0.0001;
+        heartbeatOsc.connect(heartbeatGain).connect(audioCtx.destination);
+        heartbeatOsc.start();
+        // Pulse the gain like a heartbeat
+        const beat = () => {
+          if (!heartbeatGain) return;
+          const t = audioCtx.currentTime;
+          heartbeatGain.gain.cancelScheduledValues(t);
+          heartbeatGain.gain.setValueAtTime(0.0001, t);
+          heartbeatGain.gain.exponentialRampToValueAtTime(0.15, t + 0.08);
+          heartbeatGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
+        };
+        // Double beat rhythm
+        setInterval(() => { beat(); setTimeout(beat, 220); }, 1000);
+      }
+
+      /* ------------------------------
+         Scene interactions
+         ------------------------------ */
+      const btnOpenHeart = document.getElementById('btnOpenHeart');
+      function openHeart(e) {
+        const rect = e.target.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+        heartExplosion(x, y, 30);
+        showEnvelope();
+        startMusic(); // Start music after user interaction
+        setTimeout(() => showScene(scene2), 1100);
+      }
+      btnOpenHeart.addEventListener('click', openHeart);
+      // Touch support
+      btnOpenHeart.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        openHeart(e);
+      }, { passive: false });
+      // Keyboard support (Enter/Space)
+      btnOpenHeart.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openHeart(e);
+        }
+      });
+      // Mouse hover spotlight that follows cursor
+      btnOpenHeart.addEventListener('mousemove', (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        e.currentTarget.style.setProperty('--mx', x + 'px');
+        e.currentTarget.style.setProperty('--my', y + 'px');
+      });
+
+      const urdu2 = document.getElementById('urdu2');
+      function revealSecondShayari() {
+        urdu2.style.transition = 'opacity 1200ms ease';
+        urdu2.style.opacity = '1';
+      }
+
+      const btnSurprise = document.getElementById('btnSurprise');
+      btnSurprise.addEventListener('click', () => {
+        showScene(scene3);
+        document.getElementById('dim').classList.add('show');
+        startHeartbeat();
+      });
+
+      // Trigger second shayari 3s after Scene 2 appears
+      const observer = new MutationObserver(() => {
+        if (scene2.classList.contains('active')) {
+          setTimeout(revealSecondShayari, 3000);
+        }
+      });
+      observer.observe(scene2, { attributes: true });
+
+      /* ------------------------------
+         Final proposal: Yes buttons
+         ------------------------------ */
+      const fireworks = document.getElementById('fireworks');
+      function launchFirework() {
+        const sx = Math.random() * window.innerWidth;
+        const sy = window.innerHeight + 30;
+        const ex = sx + (Math.random() * 120 - 60);
+        const ey = Math.random() * window.innerHeight * 0.4 + 120;
+
+        const rocket = document.createElement('span');
+        rocket.className = 'rocket';
+        rocket.textContent = '❤';
+        rocket.style.setProperty('--sx', sx + 'px');
+        rocket.style.setProperty('--sy', sy + 'px');
+        rocket.style.setProperty('--ex', ex + 'px');
+        rocket.style.setProperty('--ey', ey + 'px');
+        fireworks.appendChild(rocket);
+
+        setTimeout(() => {
+          // Burst sparks
+          const sparks = 18 + Math.floor(Math.random() * 10);
+          for (let i = 0; i < sparks; i++) {
+            const spark = document.createElement('span');
+            spark.className = 'spark';
+            spark.textContent = '❤';
+            const angle = (Math.PI * 2) * (i / sparks);
+            const dist = 40 + Math.random() * 40;
+            const dx = Math.cos(angle) * dist;
+            const dy = Math.sin(angle) * dist;
+            spark.style.setProperty('--bx', ex + 'px');
+            spark.style.setProperty('--by', ey + 'px');
+            spark.style.setProperty('--dx', dx + 'px');
+            spark.style.setProperty('--dy', dy + 'px');
+            fireworks.appendChild(spark);
+            setTimeout(() => spark.remove(), 1050);
+          }
+          setTimeout(() => rocket.remove(), 200);
+        }, 900);
+      }
+
+      function celebrateFinale() {
+        // Stronger petals
+        spawnPetals(22, true);
+        // Burst a few fireworks repeatedly
+        let bursts = 0;
+        const interval = setInterval(() => {
+          if (isMobile) {
+            launchFirework();
+          } else {
+            launchFirework(); launchFirework();
+          }
+          bursts++;
+          if (bursts > (isMobile ? 4 : 5)) clearInterval(interval);
+        }, 420);
+        // Glow the background more golden
+        document.body.style.transition = 'background 1600ms ease';
+        document.body.style.background =
+          'radial-gradient(1200px 600px at 10% 10%, rgba(245, 208, 108, 0.08) 0%, transparent 65%),' +
+          'radial-gradient(900px 500px at 90% 90%, rgba(245, 208, 108, 0.06) 0%, transparent 60%),' +
+          'radial-gradient(1200px 800px at 50% 50%, rgba(245, 208, 108, 0.08) 0%, transparent 70%),' +
+          'linear-gradient(135deg, #120006 0%, #360010 35%, #6a001a 65%, #120006 100%)';
+        // Show final lines
+        document.getElementById('finalLines').classList.add('show');
+      }
+
+      const btnYes = document.getElementById('btnYes');
+      const btnForeverYes = document.getElementById('btnForeverYes');
+      function finalYes() {
+        celebrateFinale();
+      }
+      btnYes.addEventListener('click', finalYes);
+      btnForeverYes.addEventListener('click', finalYes);
+    </script>
+  </body>
+</html>
+
